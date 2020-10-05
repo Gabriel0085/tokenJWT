@@ -22,11 +22,12 @@ class Auth extends ResourceController
 		// add code to fetch through db and check they are valid
 		// sending no email and password also works here because both are empty
 		if ($email === $password) {
-			$key = Services::getSecretKey();
+            $time = time();
+            $key = Services::getSecretKey();
 			$payload = [
-				'aud' => 'http://example.com',
-				'iat' => 1356999524,
-				'nbf' => 1357000000,
+                'iat' => $time, //tempo de inicialização do token
+                'exp' => $time + 60, //tempo de duração do tolen
+                //'data' => ['email'=>]
 			];
 
 			/**
@@ -40,5 +41,14 @@ class Auth extends ResourceController
 		}
 
 		return $this->respond(['message' => 'Invalid login details'], 401);
-	}
+    }
+    
+    protected function validateToken($token){
+        try{
+            $key = Services::getSecretKey();
+        }
+        catch(\Exception $e){
+            return false;
+        }
+    }
 }
