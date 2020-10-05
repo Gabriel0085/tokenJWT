@@ -12,7 +12,7 @@ class Auth extends ResourceController
 	public function create()
 	{
 		/**
-		 * JWT claim types
+		 * JWT claim typess
 		 * https://auth0.com/docs/tokens/concepts/jwt-claims#reserved-claims
 		 */
 
