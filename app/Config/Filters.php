@@ -16,7 +16,7 @@ class Filters extends BaseConfig
 	// Always applied before every request
 	public $globals = [
 		'before' => [
-			'authFilter', //se comentar não chama o filter e vai direto para o controller
+			//'authFilter', //se comentar não chama o filter e vai direto para o controller
 			//'honeypot'
 			// 'csrf',
 		],
@@ -35,14 +35,14 @@ class Filters extends BaseConfig
 	// that they should run on, like:
 	//    'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
 	public $filters = [
-		'authFilter' => [
-			'before' => [
-				// 'api/user/*',
-				// 'api/user',
-				// 'api/home',
-				// 'api/home*',
-				'home',
-			],
-		],
+		// 'authFilter' => [
+		// 	'before' => [
+		// 		// 'api/user/*',
+		// 		// 'api/user',
+		// 		// 'api/home',
+		// 		// 'api/home*',
+		// 		'home',
+		// 	],
+		// ],
 	];
 }
