@@ -9,24 +9,25 @@ use CodeIgniter\API\ResponseTrait;
 
 class AuthFilter implements FilterInterface
 {
-	use ResponseTrait;
+	//use ResponseTrait;
 
 	public function before(RequestInterface $request)
 	{
-		$key        = Services::getSecretKey();
-		$authHeader = $request->getServer('HTTP_AUTHORIZATION');
-		$arr        = explode(' ', $authHeader);
-		$token      = $arr[1];
+		// $key        = Services::getSecretKey();
+		// $authHeader = $request->getServer('HTTP_AUTHORIZATION');
+		// $arr        = explode(' ', $authHeader);
+		// $token      = $arr[1];
 
-		try
-		{
-			JWT::decode($token, $key, ['HS256']);
-		}
-		catch (\Exception $e)
-		{
-			return Services::response()
-				->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED);
-		}
+		// try
+		// {
+		// 	JWT::decode($token, $key, ['HS256']);
+		// }
+		// catch (\Exception $e)
+		// {
+		// 	return Services::response()
+		// 		->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED);
+		// }
+		echo "esta funcionando";
 		
 	}
 
