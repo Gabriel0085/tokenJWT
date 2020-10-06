@@ -11,44 +11,52 @@ class Auth extends ResourceController
 
 	public function create()
 	{
-		/**
-		 * JWT claim typess
-		 * https://auth0.com/docs/tokens/concepts/jwt-claims#reserved-claims
-		 */
-
+		//Elementos que passarão pela verificação
 		$email = $this->request->getPost('email');
 		$password = $this->request->getPost('password');
 
-		// add code to fetch through db and check they are valid
-		// sending no email and password also works here because both are empty
+		//realizar consultas com o banco para verificações mais reais
+		
+		//caso atenda a verificação será gerado um token
 		if ($email === $password) {
             $time = time();
             $key = Services::getSecretKey();
 			$payload = [
                 'iat' => $time, //tempo de inicialização do token
-                'exp' => $time + 60, //tempo de duração do tolen
-                //'data' => ['email'=>]
+                'exp' => $time + 60*30, //tempo de duração do tolen
+                'data' => ['pass1'=>$email, 'pass2'=>$password]
 			];
 
-			/**
-			 * IMPORTANT:
-			 * You must specify supported algorithms for your application. See
-			 * https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
-			 * for a list of spec-compliant algorithms.
-			 */
+	
 			$jwt = JWT::encode($payload, $key);
 			return $this->respond(['token' => $jwt], 200);
 		}
 
-		return $this->respond(['message' => 'Invalid login details'], 401);
+		return $this->respond(['message' => 'Login inválido'], 401);
     }
     
-    protected function validateToken($token){
+    public function validateToken($token){
         try{
-            $key = Services::getSecretKey();
+			//retorna o token descriptado
+			$key = Services::getSecretKey();
+			return JWT::decode($token, $key, array('HS256'));
         }
         catch(\Exception $e){
             return false;
         }
-    }
+	}
+	
+	public function verifyToken(){
+		$key = Services::getSecretKey();
+		$token = $this->request->getPost("token");
+
+		if(!$this->validateToken($token)){
+			//caso o token não seja valido retorna erro
+			return $this->respond(['message'=>'Token inválido', 401]);
+		}
+		else{
+			$data = JWT::decode($token, $key, array('HS256'));
+			return $this->respond(['data'=>$data, 200]);
+		}
+	}
 }
