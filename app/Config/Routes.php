@@ -38,6 +38,7 @@ $routes->setAutoRoute(true);
 
 
 $routes->post('home', 'Home::insertUser');
+//$routes->post('insert', 'Home::insertUser' ['filter' => 'authFilter']);
 
 /**
  * --------------------------------------------------------------------

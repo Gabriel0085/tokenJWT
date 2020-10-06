@@ -27,6 +27,7 @@ class AuthFilter implements FilterInterface
 			return Services::response()
 				->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED);
 		}
+		
 	}
 
 	//--------------------------------------------------------------------

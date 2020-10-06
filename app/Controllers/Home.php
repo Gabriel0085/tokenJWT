@@ -6,7 +6,7 @@ class Home extends Auth //Utiliza os metodos de Auth
 	{
 		return view('welcome_message');
 	}
-
+	
 	public function insertUser(){
 		$token = $this->request->getHeader('Authorization')->getValue();
 		
